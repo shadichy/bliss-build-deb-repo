@@ -58,7 +58,7 @@ jobs:
         run: ls dep.gz
 
       - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dep.gz
           path: ./dep.gz
