@@ -53,12 +53,15 @@ jobs:
       
       - name: Extract artifact
         run: printf '%s' '${{ secrets.GPG_SIGNING_KEY }}' | gzip >dep.gz 
+      
+      - name: test
+        run: ls dep.gz
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: dep.gz
-          path: dep.gz
+          path: ./dep.gz
 
       # - name: Deploy to GitHub Pages
       #   id: deployment
