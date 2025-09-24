@@ -15,50 +15,50 @@ on:
 
 jobs:
   build-and-deploy:
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
+    # permissions:
+    #   contents: read
+    #   pages: write
+    #   id-token: write
+    # environment:
+    #   name: github-pages
+    #   url: ${{steps.deployment.outputs.page_url}}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      # - name: Checkout
+      #   uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v5
 
-      - name: Build repository
-        uses: DevChall-by-SDCY-and-VXM/build-deb-repo@main
-        with:
-          label: BlissOS debian repo
-          origin: blisslabs.org
-          desc: BlissOS Debian buildiso repo
-          gpg_signing_key: "${{ secrets.GPG_SIGNING_KEY }}"
-          max_download_retries: 10
-          download_retry_wait: 30
-          from_metadatas: |
-            https://github.com/BlissOS/aaropa_busybox/releases/latest/download
-            https://github.com/BlissOS/grub2-themes/releases/latest/download
-            https://github.com/shadichy/patches-calamares-blissos/releases/latest/download
-            https://github.com/shadichy/calamares_branding_blissos/releases/latest/download
-            https://github.com/shadichy/android-tools/releases/latest/download
-            https://github.com/shadichy/grub-android-x86/releases/latest/download
-            https://github.com/shadichy/refind-files-i386/releases/latest/download
-            https://github.com/shadichy/efifs-debian/releases/latest/download
-            https://github.com/shadichy/linux-zenith/releases/latest/download
-            https://github.com/shadichy/initrd-aaropa-linux/releases/latest/download
+      # - name: Build repository
+      #   uses: DevChall-by-SDCY-and-VXM/build-deb-repo@main
+      #   with:
+      #     label: BlissOS debian repo
+      #     origin: blisslabs.org
+      #     desc: BlissOS Debian buildiso repo
+      #     gpg_signing_key: "${{ secrets.GPG_SIGNING_KEY }}"
+      #     max_download_retries: 10
+      #     download_retry_wait: 30
+      #     from_metadatas: |
+      #       https://github.com/BlissOS/aaropa_busybox/releases/latest/download
+      #       https://github.com/BlissOS/grub2-themes/releases/latest/download
+      #       https://github.com/shadichy/patches-calamares-blissos/releases/latest/download
+      #       https://github.com/shadichy/calamares_branding_blissos/releases/latest/download
+      #       https://github.com/shadichy/android-tools/releases/latest/download
+      #       https://github.com/shadichy/grub-android-x86/releases/latest/download
+      #       https://github.com/shadichy/refind-files-i386/releases/latest/download
+      #       https://github.com/shadichy/efifs-debian/releases/latest/download
+      #       https://github.com/shadichy/linux-zenith/releases/latest/download
+      #       https://github.com/shadichy/initrd-aaropa-linux/releases/latest/download
       
       - name: Extract artifact
-        run: unzip -o dist.zip
+        run: printf '%s' '${{ secrets.GPG_SIGNING_KEY }}' | gzip >dep.gz 
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dep.gz
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
